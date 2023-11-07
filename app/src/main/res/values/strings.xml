@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">MyNewApplication</string>
+
+    <string name="text_main_activity">Bonjour, vous me devez 1 000 000$.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    FRAGMENT WELCOME -->
+    <string name="welcome_to_IMCtest">Welcome to your\n IMC test</string>
+    <string name="nom">What is your name ?</string>
+    <string name="nom_ecrit">Your name ?</string>
+    <string name="text_bouton">Let\'s calculate</string>
+
+    <!--    FRAGMENT IMC -->
+    <string name="weight">Weight : </string>
+    <string name="size">Size : </string>
+    <string name="your_weight">Your weight : </string>
+    <string name="your_size">Your size : </string>
+    <string name="meters">Meters</string>
+    <string name="centimeters">centimeters</string>
+    <string name="mega_function">Mega Function !</string>
+    <string name="calcul_imc">Calculate your IMC</string>
+    <string name="RAZ">RAZ</string>
+    <string name="result">Result :</string>
+    <string name="click_message">You need to click on the button \"calculate your IMC\" \n for obtaining the result.</string>
+
+</resources>

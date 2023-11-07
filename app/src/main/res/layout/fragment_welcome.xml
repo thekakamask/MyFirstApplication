@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffba"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="WelcomeFragment">
+
+    <TextView
+        android:id="@+id/message_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/border"
+        android:padding="24dp"
+        android:text="@string/welcome_to_IMCtest"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/message_for_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/nom"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/message_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:autofillHints="name"
+        android:hint="@string/nom_ecrit"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/button_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="60dp"
+        android:text="@string/text_bouton"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+
+        />
+    <!--        android:backgroundTint="#00FFFFFF"-->
+
+
+</LinearLayout>
