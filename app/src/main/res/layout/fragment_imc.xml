@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="#ffffba">
+    android:background="@color/pink">
 
 
     <TextView
@@ -12,8 +12,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/weight"
-        android:layout_marginTop="70dp"
-        android:textSize="24sp"/>
+        android:layout_marginTop="110dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/poids"
@@ -22,7 +23,10 @@
         android:layout_marginEnd="60dp"
         android:paddingTop="15dp"
         android:hint="@string/your_weight"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberDecimal"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textColorHighlight="@color/black"/>
 
     <TextView
         android:id="@+id/text_taille"
@@ -30,7 +34,8 @@
         android:layout_height="wrap_content"
         android:text="@string/size"
         android:layout_marginTop="25dp"
-        android:textSize="24sp"/>
+        android:textSize="24sp"
+        android:textColor="@color/black"/>
 
     <EditText
         android:id="@+id/taille"
@@ -39,7 +44,10 @@
         android:layout_marginEnd="60dp"
         android:paddingTop="15dp"
         android:hint="@string/your_size"
-        android:inputType="numberDecimal"/>
+        android:inputType="numberDecimal"
+        android:textColor="@color/white"
+        android:textColorHint="@color/black"
+        android:textColorHighlight="@color/black"/>
 
     <RadioGroup
         android:id="@+id/group"
@@ -51,35 +59,42 @@
             android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/meters"/>
+            android:text="@string/meters"
+            android:textColor="@color/black"/>
 
         <RadioButton
             android:id="@+id/radio2"
             android:layout_marginStart="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/centimeters"/>
+            android:text="@string/centimeters"
+            android:textColor="@color/black"/>
+
     </RadioGroup>
 
     <CheckBox
         android:id="@+id/mega"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/mega_function"/>
+        android:text="@string/mega_function"
+        android:textColor="@color/black"
+        android:buttonTint="@color/yellow"/>
 
     <Button
         android:id="@+id/calculImc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calcul_imc"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:backgroundTint="@color/yellow" />
 
     <Button
         android:id="@+id/raz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/RAZ"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:backgroundTint="@color/yellow"/>
 
     <TextView
         android:layout_marginTop="30dp"
@@ -88,6 +103,7 @@
         android:layout_height="wrap_content"
         android:text="@string/result"
         android:textSize="25sp"
+        android:textColor="@color/black"
         />
 
     <TextView
@@ -97,6 +113,7 @@
         android:gravity="center"
         android:layout_height="wrap_content"
         android:text="@string/click_message"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColor="@color/black"/>
 
 </LinearLayout>

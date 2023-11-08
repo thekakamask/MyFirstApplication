@@ -1,10 +1,12 @@
 package com.example.myfirstapplication;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,8 +49,10 @@ public class WelcomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        int textColorDisabled = Color.parseColor("#FFFFFF");
         binding.buttonWelcome.setEnabled(false);
         binding.buttonWelcome.setBackgroundColor(0);
+        binding.buttonWelcome.setTextColor(textColorDisabled);
 
         binding.messageInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -63,16 +67,23 @@ public class WelcomeFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int color = Color.parseColor("#bae1ff");
+                int backgroundColor = Color.parseColor("#FEE715");
+                int textColorEnabled = Color.parseColor("#000000");
+                //Drawable backgroundWithBorder = ContextCompat.getDrawable(getContext(),R.drawable.border_button);
+
                 binding.buttonWelcome.setEnabled(!s.toString().isEmpty());
-                binding.buttonWelcome.setBackgroundColor(color);
+                binding.buttonWelcome.setBackgroundColor(backgroundColor);
+                //binding.buttonWelcome.setBackground(backgroundWithBorder);
 
                 if (s.toString().isEmpty()) {
                     binding.buttonWelcome.setEnabled(false);
                     binding.buttonWelcome.setBackgroundColor(0);
+                    binding.buttonWelcome.setTextColor(textColorDisabled);
                 } else {
                     binding.buttonWelcome.setEnabled(true);
-                    binding.buttonWelcome.setBackgroundColor(color);
+                    //binding.buttonWelcome.setBackground(backgroundWithBorder);
+                    binding.buttonWelcome.setBackgroundColor(backgroundColor);
+                    binding.buttonWelcome.setTextColor(textColorEnabled);
                 }
             }
         });
