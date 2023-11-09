@@ -71,8 +71,8 @@ public class WelcomeFragment extends Fragment {
                 int textColorEnabled = Color.parseColor("#000000");
                 //Drawable backgroundWithBorder = ContextCompat.getDrawable(getContext(),R.drawable.border_button);
 
-                binding.buttonWelcome.setEnabled(!s.toString().isEmpty());
-                binding.buttonWelcome.setBackgroundColor(backgroundColor);
+                //binding.buttonWelcome.setEnabled(!s.toString().isEmpty());
+                //binding.buttonWelcome.setBackgroundColor(backgroundColor);
                 //binding.buttonWelcome.setBackground(backgroundWithBorder);
 
                 if (s.toString().isEmpty()) {

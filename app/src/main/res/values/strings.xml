@@ -23,4 +23,7 @@
     <string name="result">Result :</string>
     <string name="click_message">You need to click on the button \"calculate your IMC\" \n for obtaining the result.</string>
 
+    <!--    FRAGMENT RESULTAT -->
+    <string name="result2">100 IMC</string>
+
 </resources>

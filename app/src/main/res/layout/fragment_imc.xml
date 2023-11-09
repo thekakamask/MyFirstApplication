@@ -23,9 +23,9 @@
         android:layout_marginEnd="60dp"
         android:paddingTop="15dp"
         android:hint="@string/your_weight"
-        android:inputType="numberDecimal"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
+        android:inputType="numberDecimal"
         android:textColorHighlight="@color/black"/>
 
     <TextView
@@ -44,8 +44,8 @@
         android:layout_marginEnd="60dp"
         android:paddingTop="15dp"
         android:hint="@string/your_size"
+        android:textColor="@color/black"
         android:inputType="numberDecimal"
-        android:textColor="@color/white"
         android:textColorHint="@color/black"
         android:textColorHighlight="@color/black"/>
 
@@ -77,24 +77,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mega_function"
-        android:textColor="@color/black"
-        android:buttonTint="@color/yellow"/>
+        android:textColor="@color/black"/>
 
     <Button
         android:id="@+id/calculImc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calcul_imc"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/yellow" />
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/raz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/RAZ"
-        android:textColor="@color/black"
-        android:backgroundTint="@color/yellow"/>
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_marginTop="30dp"
