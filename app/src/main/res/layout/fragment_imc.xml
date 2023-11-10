@@ -96,15 +96,16 @@
     <TextView
         android:layout_marginTop="30dp"
         android:id="@+id/result"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/result"
         android:textSize="25sp"
         android:textColor="@color/black"
+        android:gravity="center"
         />
 
     <TextView
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:id="@+id/click_message"
         android:layout_width="match_parent"
         android:gravity="center"

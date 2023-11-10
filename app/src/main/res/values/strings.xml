@@ -20,7 +20,7 @@
     <string name="mega_function">Mega Function !</string>
     <string name="calcul_imc">Calculate your IMC</string>
     <string name="RAZ">RAZ</string>
-    <string name="result">Result :</string>
+    <string name="result">Your result</string>
     <string name="click_message">You need to click on the button \"calculate your IMC\" \n for obtaining the result.</string>
 
     <!--    FRAGMENT RESULTAT -->

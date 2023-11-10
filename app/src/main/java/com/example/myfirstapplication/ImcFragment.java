@@ -15,6 +15,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import com.example.myfirstapplication.databinding.FragmentImcBinding;
 
@@ -28,6 +30,7 @@ import org.w3c.dom.Text;
 public class ImcFragment extends Fragment {
 
     private FragmentImcBinding binding;
+    private String imcCalculate = "";
 
     public static ImcFragment newInstance() {
         ImcFragment fragment = new ImcFragment();
@@ -46,6 +49,8 @@ public class ImcFragment extends Fragment {
         binding = FragmentImcBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -80,15 +85,50 @@ public class ImcFragment extends Fragment {
         binding.calculImc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                ResultFragment resultFragment = ResultFragment.newInstance();
-                fragmentTransaction.add(R.id.fragment_container, resultFragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                calculateImc();
             }
         });
 
+        binding.raz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resultToZero();
+            }
+        });
+
+        binding.mega.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    if(!imcCalculate.isEmpty()) {
+                        binding.result.setText("You are always pretty");
+
+                    } else {
+                        binding.result.setText(R.string.result);
+
+                    }
+                } else {
+                    if (!imcCalculate.isEmpty()) {
+                        binding.result.setText(imcCalculate);
+                    } else {
+                        binding.result.setText(R.string.result);
+                    }
+                }
+            }
+
+        });
+
+        CompoundButton.OnCheckedChangeListener radioCheckedListner = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    binding.result.setText(R.string.result);
+                }
+            }
+        };
+
+        binding.radio1.setOnCheckedChangeListener(radioCheckedListner);
+        binding.radio2.setOnCheckedChangeListener(radioCheckedListner);
     }
 
     TextWatcher textWatcher = new TextWatcher() {
@@ -108,6 +148,54 @@ public class ImcFragment extends Fragment {
 
         }
     };
+
+    private void calculateImc() {
+        String poidsResult = binding.poids.getText().toString();
+        String tailleResult = binding.taille.getText().toString();
+        float imc = 0;
+
+        if (!poidsResult.isEmpty() && !tailleResult.isEmpty()) {
+            try {
+                float poidsFloat = Float.parseFloat(poidsResult);
+                float tailleFloat = Float.parseFloat(tailleResult);
+
+                if (poidsFloat<= 0 && tailleFloat <= 0) {
+                    Toast.makeText(getActivity(), "Weight and Size need to be superior to zero", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (binding.radio1.isChecked()) {
+                    // AUCUN CHANGEMENT PUISQUE TAILLE EN METRES
+                } else if (binding.radio2.isChecked()){
+                    // CHANGEMENT PUISQUE TAILLE EN CENTIMETRES
+                    tailleFloat=tailleFloat/100;
+                } else {
+                    // AUCUN RADIOBUTTON COCHE
+                    binding.result.setText("Please, choose your size in meters or in centimeters");
+                    return;
+                }
+
+                if (tailleFloat>0) {
+                    imc = poidsFloat / (tailleFloat * tailleFloat);
+                    imcCalculate= String.format("Your IMC is : %.2f", imc);
+                    binding.result.setText(String.format("Your IMC is : %.2f", imc));
+
+                } else {
+                    binding.result.setText("Invalid size");
+                }
+
+
+            } catch (NumberFormatException e) {
+                binding.result.setText("Invalid Input");
+            }
+
+
+        } else {
+            binding.result.setText("Please choose your size and your weight");
+        }
+
+
+    }
 
     private void updateButtonState() {
 
@@ -131,6 +219,17 @@ public class ImcFragment extends Fragment {
             binding.calculImc.setEnabled(false);
             binding.raz.setEnabled(false);
         }
+    }
+
+
+    private void resultToZero() {
+        binding.poids.setText("");
+        binding.taille.setText("");
+        binding.result.setText(R.string.result);
+
+        binding.mega.setChecked(false);
+        binding.group.clearCheck();
+        imcCalculate="";
     }
 
 }
