@@ -16,11 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.myfirstapplication.databinding.FragmentImcBinding;
 
 import org.w3c.dom.Text;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,6 +59,13 @@ public class ImcFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        setupListeners();
+        setupColors();
+        initializeButtonColors();
+
+    }
+
+    private void setupColors() {
         ColorStateList colorStateList = new ColorStateList(
                 new int[][]{
                         new int[]{android.R.attr.state_checked}, // checked
@@ -70,84 +80,104 @@ public class ImcFragment extends Fragment {
         binding.radio1.setButtonTintList(colorStateList);
         binding.radio2.setButtonTintList(colorStateList);
         binding.mega.setButtonTintList(colorStateList);
-
-
-        binding.calculImc.setEnabled(false);
-        binding.calculImc.setBackgroundColor(0);
-
-        binding.raz.setEnabled(false);
-        binding.raz.setBackgroundColor(0);
-
-
-        binding.poids.addTextChangedListener(textWatcher);
-        binding.taille.addTextChangedListener(textWatcher);
-
-        binding.calculImc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculateImc();
-            }
-        });
-
-        binding.raz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resultToZero();
-            }
-        });
-
-        binding.mega.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    if(!imcCalculate.isEmpty()) {
-                        binding.result.setText("You are always pretty");
-
-                    } else {
-                        binding.result.setText(R.string.result);
-
-                    }
-                } else {
-                    if (!imcCalculate.isEmpty()) {
-                        binding.result.setText(imcCalculate);
-                    } else {
-                        binding.result.setText(R.string.result);
-                    }
-                }
-            }
-
-        });
-
-        CompoundButton.OnCheckedChangeListener radioCheckedListner = new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    binding.result.setText(R.string.result);
-                }
-            }
-        };
-
-        binding.radio1.setOnCheckedChangeListener(radioCheckedListner);
-        binding.radio2.setOnCheckedChangeListener(radioCheckedListner);
     }
 
-    TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    private void setupListeners() {
+        binding.calculImc.setOnClickListener(v -> calculateImc());
+        binding.raz.setOnClickListener(v -> resetFields());
+        binding.mega.setOnCheckedChangeListener(this::toggleMegaFeature);
+        TextWatcher textWatcher = getTextWatcher();
+        binding.poids.addTextChangedListener(textWatcher);
+        binding.taille.addTextChangedListener(textWatcher);
+        binding.group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                convertSizeValue(i);
+            }
+        });
+    }
 
+    private void convertSizeValue(int i) {
+        String sizeStr = binding.taille.getText().toString();
+        if (!sizeStr.isEmpty()) {
+            try {
+                float tailleValue = Float.parseFloat(sizeStr);
+                if (i == R.id.radio1 && tailleValue > 2) {
+
+                    tailleValue = tailleValue / 100;
+                    binding.taille.setText(String.format(Locale.getDefault(), "%.2f", tailleValue));
+                } else if (i == R.id.radio2 && tailleValue <= 2) {
+
+                    tailleValue = tailleValue * 100;
+                    binding.taille.setText(String.format(Locale.getDefault(), "%.0f", tailleValue));
+                }
+            } catch (NumberFormatException e) {
+
+            }
         }
+    }
+    private TextWatcher getTextWatcher() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                binding.result.setText(R.string.result);
+            }
 
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateButtonState();
+            }
+        };
+    }
+
+    private void resetFields() {
+        binding.poids.setText("");
+        binding.taille.setText("");
+        binding.mega.setChecked(false);
+        binding.group.clearCheck();
+        imcCalculate = "";
+        binding.result.setText(R.string.result);
+        updateButtonState();
+    }
+
+    private void toggleMegaFeature(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            if (!imcCalculate.isEmpty()) {
+                binding.result.setText("You are always pretty");
+            } else {
+                binding.result.setText(R.string.result);
+            }
+        } else {
+            binding.result.setText(imcCalculate.isEmpty() ? getString(R.string.result) : imcCalculate);
         }
+    }
 
-        @Override
-        public void afterTextChanged(Editable s) {
-           updateButtonState();
 
+
+    private void updateButtonState() {
+
+        int backgroundColor = Color.parseColor("#FEE715");
+
+        boolean isPoidsFilled = binding.poids.getText().length() > 0;
+        boolean isTailleFilled = binding.taille.getText().length() > 0;
+        boolean shouldEnableButtons = isPoidsFilled && isTailleFilled;
+
+
+        if (shouldEnableButtons) {
+            binding.calculImc.setBackgroundColor(backgroundColor);
+            binding.raz.setBackgroundColor(backgroundColor);
+            binding.calculImc.setEnabled(true);
+            binding.raz.setEnabled(true);
+        } else {
+            binding.calculImc.setBackgroundColor(0);
+            binding.raz.setBackgroundColor(0);
+            binding.calculImc.setEnabled(false);
+            binding.raz.setEnabled(false);
         }
-    };
+    }
 
     private void calculateImc() {
         String poidsResult = binding.poids.getText().toString();
@@ -197,39 +227,8 @@ public class ImcFragment extends Fragment {
 
     }
 
-    private void updateButtonState() {
-
-        int backgroundColor = Color.parseColor("#FEE715");
-
-        boolean isPoidsFilled = binding.poids.getText().length() > 0;
-        boolean isTailleFilled = binding.taille.getText().length() > 0;
-        boolean shouldEnableButtons = isPoidsFilled && isTailleFilled;
-
-        binding.calculImc.setBackgroundColor(backgroundColor);
-        binding.raz.setBackgroundColor(backgroundColor);
-
-        if (shouldEnableButtons) {
-            binding.calculImc.setBackgroundColor(backgroundColor);
-            binding.raz.setBackgroundColor(backgroundColor);
-            binding.calculImc.setEnabled(true);
-            binding.raz.setEnabled(true);
-        } else {
-            binding.calculImc.setBackgroundColor(0);
-            binding.raz.setBackgroundColor(0);
-            binding.calculImc.setEnabled(false);
-            binding.raz.setEnabled(false);
-        }
+    private void initializeButtonColors() {
+        binding.calculImc.setBackgroundColor(0);
+        binding.raz.setBackgroundColor(0);
     }
-
-
-    private void resultToZero() {
-        binding.poids.setText("");
-        binding.taille.setText("");
-        binding.result.setText(R.string.result);
-
-        binding.mega.setChecked(false);
-        binding.group.clearCheck();
-        imcCalculate="";
-    }
-
 }
